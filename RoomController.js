@@ -6,7 +6,7 @@ var roleTower = require('role.tower');
 var roleScout = require('role.scout');
 var ExtensionPlacement = require('constructionManager');
 
-var main = {
+var RoomController = {
 
     /** @param {Creep} creep **/
     run: function(room, spawn) {
@@ -16,8 +16,14 @@ var main = {
         var defenders = _.filter(Game.creeps, (creep) => creep.memory.role == 'defender');
         var scouts = _.filter(Game.creeps, (creep) => creep.memory.role == 'scouts');
         var sources = room.find(FIND_SOURCES);
-    
-        ExtensionPlacement.run(room)
+        
+        var needs_spawn = false
+        if(spawn == "null")
+        {
+            needs_spawn = true
+        }
+        
+        ExtensionPlacement.run(room, spawn, needs_spawn)
         for(var name in Memory.creeps) {
             if(!Game.creeps[name]) {
                 delete Memory.creeps[name];
@@ -25,7 +31,15 @@ var main = {
             }
         }
         
-        console.log(JSON.stringify(Game.rooms['W5N8'].controller));
+        if(needs_spawn == true)
+        {
+            var targets = room.find(FIND_STRUCTURES, {
+                    filter: (structure) => {
+                        return (structure.structureType == STRUCTURE_SPAWN);
+                    }
+            });
+            spawn = targets[0];
+        }
         
         var all_adjacent_rooms = Game.map.describeExits(room.name);
         var roomNamesArray = Object.values(all_adjacent_rooms);
@@ -184,4 +198,4 @@ var main = {
     }
 };
 
-module.exports = main;
+module.exports = RoomController;
