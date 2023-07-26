@@ -5,7 +5,15 @@ module.exports.loop = function () {
     for (roomName in Game.rooms)
     {
         const room = Game.rooms[roomName];
-        owner_name = room.controller.owner.username;
+        if(room.controller.owner)
+        {
+            owner_name = room.controller.owner.username;
+        }
+        else
+        {
+            owner_name = "null"
+        }
+        
         if(owner_name == 'SoldierDoge')
         {
             var targets = room.find(FIND_STRUCTURES, {
