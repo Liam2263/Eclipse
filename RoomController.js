@@ -41,17 +41,46 @@ var RoomController = {
             spawn = targets[0];
         }
         
+        all_owned_room_names = []
+        totalRoomsLength = 0;
+        for (roomName in Game.rooms)
+        {
+            const room = Game.rooms[roomName];
+            if(room.controller.owner)
+            {
+                owner_name = room.controller.owner.username;
+            }
+            else
+            {
+                owner_name = "null"
+            }
+            
+            if(owner_name == 'SoldierDoge')
+            {
+                totalRoomsLength += 1;
+            }
+        }
+        
+        //if(Game.gcl.level > totalRoomsLength)
+        //{
         var all_adjacent_rooms = Game.map.describeExits(room.name);
         var roomNamesArray = Object.values(all_adjacent_rooms);
         
         for (let i = 0; i < roomNamesArray.length; i++)
         {
             var room_name = roomNamesArray[i];
+            var the_room = Game.rooms[JSON.stringify(room_name)];
             if(Memory.rooms[room_name])
             {
-                sources = Memory.rooms[room_name];
+                var status = Game.map.getRoomStatus(room_name).status;
+                sources = Memory.rooms[room_name].energySources;
+                //if(the_room.controller.owner.username != "SoldierDoge")
+                //{
+                    
+                //}
             }
         }
+        //}
         
         function calculateBodyParts(maxEnergy) {
           const body = [];
