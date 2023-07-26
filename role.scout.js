@@ -26,7 +26,14 @@ var roleScout = {
         else
         {
             var sources = creep.room.find(FIND_SOURCES).length;
-            Memory.rooms[creep.room.name] = {name: room_name, energySources: JSON.stringify(sources)}
+            if(creep.room.controller.owner)
+            {
+                Memory.rooms[creep.room.name] = {name: room_name, energySources: JSON.stringify(sources), owner_name: JSON.stringify(creep.room.controller.owner.username)}
+            }
+            else
+            {
+                Memory.rooms[creep.room.name] = {name: room_name, energySources: JSON.stringify(sources), owner_name: "null"}
+            }
             exitDir = creep.room.findExitTo(creep.memory.main_room);
             const exit = creep.pos.findClosestByRange(exitDir);
             creep.moveTo(exit);
