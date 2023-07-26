@@ -23,7 +23,7 @@ var ExtensionPlacement = {
                 {
                     if(sources[0].pos.inRangeTo(object.x, object.y, 5))
                     {
-                        room.createConstructionSite(object.x, object.y, STRUCTURE_SPAWN);
+                        room.createConstructionSite(object.x, object.y, STRUCTURE_SPAWN, name='Spawn');
                     }
                 }
             }
